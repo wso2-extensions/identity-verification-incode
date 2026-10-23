@@ -1,0 +1,354 @@
+{
+    "create": {
+        "image": "assets/images/logos/incode.svg",
+        "header": "Incode Identity Verification",
+        "Subheading": "Enable identity verification through Incode at sign-up and face authentication at login.",
+        "documentation": "",
+        "modal": {
+            "form": {
+                "fields": [
+                    {
+                        "index": 0,
+                        "ariaLabel": "Incode Name",
+                        "type": "text",
+                        "name": "name",
+                        "label": "Name",
+                        "placeholder": "Enter a name for the connection.",
+                        "required": true,
+                        "autoComplete": true,
+                        "data-testid": "incode-idv-create-wizard-page-idp-name",
+                        "maxLength": "50",
+                        "minLength": "3",
+                        "width": "13",
+                        "initialValue": "Incode"
+                    },
+                    {
+                        "index": 1,
+                        "ariaLabel": "Incode Client ID",
+                        "type": "text",
+                        "name": "clientId",
+                        "label": "Client ID",
+                        "placeholder": "Client ID of an Incode onboarding or face authentication client.",
+                        "required": true,
+                        "autoComplete": true,
+                        "data-testid": "incode-idv-create-wizard-page-idp-clientid",
+                        "maxLength": "200",
+                        "minLength": "3",
+                        "width": "13"
+                    },
+                    {
+                        "index": 2,
+                        "ariaLabel": "Incode Client secret",
+                        "type": "password",
+                        "name": "clientSecret",
+                        "label": "Client secret",
+                        "placeholder": "Client secret of the Incode client.",
+                        "required": true,
+                        "autoComplete": true,
+                        "data-testid": "incode-idv-create-wizard-page-idp-clientsecret",
+                        "maxLength": "200",
+                        "minLength": "3",
+                        "width": "13",
+                        "className": "addon-field-wrapper"
+                    },
+                    {
+                        "index": 3,
+                        "ariaLabel": "Incode Authorization Endpoint URL",
+                        "type": "text",
+                        "name": "oAuth2AuthzEPUrl",
+                        "label": "Authorization Endpoint URL",
+                        "placeholder": "Authorization endpoint URL of your Incode environment.",
+                        "required": true,
+                        "autoComplete": true,
+                        "data-testid": "incode-idv-create-wizard-page-idp-oauth2authzepurl",
+                        "maxLength": "200",
+                        "minLength": "3",
+                        "width": "13"
+                    },
+                    {
+                        "index": 4,
+                        "ariaLabel": "Incode Token Endpoint URL",
+                        "type": "text",
+                        "name": "oAuth2TokenEPUrl",
+                        "label": "Token Endpoint URL",
+                        "placeholder": "Token endpoint URL of your Incode environment.",
+                        "required": true,
+                        "autoComplete": true,
+                        "data-testid": "incode-idv-create-wizard-page-idp-oauth2tokenepurl",
+                        "maxLength": "200",
+                        "minLength": "3",
+                        "width": "13"
+                    }
+                ]
+            },
+            "wizardHelp": {
+                "message": {
+                    "copyInputFields": [
+                        {
+                            "description": "Use the following URL as a <strong>Redirect URI</strong> of the Incode onboarding client.",
+                            "value": "registration_redirect_uri"
+                        },
+                        {
+                            "description": "Use the following URL as a <strong>Redirect URI</strong> of the Incode face authentication client.",
+                            "value": "redirect_uri"
+                        },
+                        {
+                            "description": "If the face authentication client is used for password recovery, also add the following <strong>Redirect URI</strong>.",
+                            "value": "recovery_redirect_uri"
+                        }
+                    ],
+                    "header": "Prerequisites",
+                    "paragraphs": [
+                        "Create one connection per Incode client: one for the <strong>onboarding</strong> client (used in self-registration and invited-user registration) and one for the <strong>face authentication</strong> client (used in login and password recovery).",
+                        "Register <Code class=\"inline-code\">https://&lt;host&gt;/accounts/register</Code> on the onboarding client, and <Code class=\"inline-code\">https://&lt;host&gt;/commonauth</Code> and <Code class=\"inline-code\">https://&lt;host&gt;/accounts/recovery</Code> on the face authentication client in the Incode Dashboard.",
+                        "The local attributes <Code class=\"inline-code\">incodeIdentityId</Code>, <Code class=\"inline-code\">incodeInterviewId</Code> and <Code class=\"inline-code\">incodeOnboardingStatus</Code> must exist: the connection maps the Incode claims to them. Also add the OpenID Connect attribute <Code class=\"inline-code\">identity_id</Code> mapped to <Code class=\"inline-code\">incodeIdentityId</Code>: the account is linked to it.",
+                        "In a self-registration flow, the Incode step can be placed before or after the form that asks for the username and password: a username chosen in the form is kept.",
+                        "In a login flow, add the Incode step after the step that identifies the user, such as <strong>Username &amp; Password</strong>, and keep that step as the subject identifier step. The connector sends the identity linked to the user as <Code class=\"inline-code\">login_hint</Code>. In a password recovery flow, add the Incode step with the face authentication connection after the step that identifies the user."
+                    ],
+                    "link": {
+                        "text": "See Incode's guide on OIDC clients.",
+                        "url": "https://developer.incode.com/concepts-and-architecture/oidc-manual-configuration/"
+                    }
+                },
+                "fields": [
+                    {
+                        "fieldName": "Name",
+                        "hint": "A unique name, e.g. Incode Onboarding or Incode Face."
+                    },
+                    {
+                        "fieldName": "Client ID",
+                        "hint": "The <Code class=\"inline-code\">Client ID</Code> of the Incode OIDC client."
+                    },
+                    {
+                        "fieldName": "Client secret",
+                        "hint": "The <Code class=\"inline-code\">Client secret</Code> of the Incode OIDC client."
+                    },
+                    {
+                        "fieldName": "Authorization Endpoint URL",
+                        "hint": "Incode authorization endpoint of your environment."
+                    },
+                    {
+                        "fieldName": "Token Endpoint URL",
+                        "hint": "Incode token endpoint of your environment."
+                    }
+                ]
+            }
+        },
+        "properties": [
+            {
+                "key": "ClientId",
+                "value": ""
+            },
+            {
+                "key": "ClientSecret",
+                "value": ""
+            },
+            {
+                "key": "callbackUrl",
+                "value": "/commonauth"
+            },
+            {
+                "key": "Scopes",
+                "value": "openid"
+            },
+            {
+                "key": "OAuth2AuthzEPUrl",
+                "value": ""
+            },
+            {
+                "key": "OAuth2TokenEPUrl",
+                "value": ""
+            },
+            {
+                "key": "commonAuthQueryParams",
+                "value": "response_mode=form_post"
+            },
+            {
+                "key": "IsUserIdInClaims",
+                "value": "true"
+            }
+        ]
+    },
+    "edit": {
+        "tabs": {
+            "quickStart": {
+                "heading": "Add Incode identity verification",
+                "subHeading": "Verify users with Incode when they sign up and when they sign in.",
+                "steps": [
+                    {
+                        "title": "Onboarding client: add to the registration flow",
+                        "content": "<p>In the self-registration flow, add the <strong>Incode</strong> step before or after the form that collects the username, and select a connection that holds an onboarding client. The step accepts only a passing Incode result, refuses an identity that is already registered, keeps the username chosen in the form and links the user to their Incode identity. Register <Code class=\"inline-code\">https://&lt;server&gt;/accounts/register</Code> on the client.</p>"
+                    },
+                    {
+                        "title": "Face authentication client: add to login",
+                        "content": "<p>In an application's login flow, add a connection that holds a face authentication client as a step after the step that identifies the user, for example Username &amp; Password, and keep that step as the subject identifier step. The connector sends the linked identity as <Code class=\"inline-code\">login_hint</Code> and requires Incode to return the same identity. Register <Code class=\"inline-code\">https://&lt;server&gt;/commonauth</Code> on the client.</p>"
+                    },
+                    {
+                        "title": "Linked users",
+                        "content": "<p>Login verifies users linked at registration by any connection made from this template. Keep JIT provisioning off. For a tenant, insert <Code class=\"inline-code\">/t/&lt;tenant&gt;</Code> after the server.</p>"
+                    }
+                ]
+            },
+            "general": [
+                {
+                    "index": 0,
+                    "displayOrder": 1,
+                    "ariaLabel": "name",
+                    "inputType": "resource_name",
+                    "type": "text",
+                    "name": "name",
+                    "label": "Name",
+                    "required": true,
+                    "message": "Connection name is required",
+                    "placeholder": "Incode",
+                    "validation": true,
+                    "value": "",
+                    "maxLength": "50",
+                    "minLength": "3",
+                    "data-testid": "idp-edit-page-general-settings-form-idp-name",
+                    "hint": "Enter a unique name for this Incode connection.",
+                    "readOnly": false
+                },
+                {
+                    "index": 1,
+                    "displayOrder": 2,
+                    "type": "textarea",
+                    "name": "description",
+                    "ariaLabel": "description",
+                    "label": "Description",
+                    "required": false,
+                    "placeholder": "Enter a description of the connection.",
+                    "value": "",
+                    "data-testid": "idp-edit-page-general-settings-form-idp-description",
+                    "maxLength": "300",
+                    "minLength": "3",
+                    "hint": "A text description of the Incode connection.",
+                    "readOnly": false
+                }
+            ],
+            "settings": [
+                {
+                    "index": 0,
+                    "displayOrder": 1,
+                    "ariaLabel": "Incode Client ID",
+                    "inputType": "default",
+                    "name": "ClientId",
+                    "label": "Client ID",
+                    "placeholder": "",
+                    "hint": "Client ID of the Incode onboarding or face authentication client.",
+                    "required": true,
+                    "readOnly": false,
+                    "value": "",
+                    "maxLength": "",
+                    "minLength": "",
+                    "width": "16",
+                    "data-testid": "idp-edit-page-authenticator-settings-IncodeAuthenticator-content-ClientId"
+                },
+                {
+                    "index": 1,
+                    "displayOrder": 2,
+                    "ariaLabel": "Incode Client secret",
+                    "inputType": "password",
+                    "name": "ClientSecret",
+                    "label": "Client secret",
+                    "placeholder": "",
+                    "hint": "Client secret of the Incode client.",
+                    "required": true,
+                    "readOnly": false,
+                    "value": "",
+                    "maxLength": "",
+                    "minLength": "",
+                    "width": "16",
+                    "data-testid": "idp-edit-page-authenticator-settings-IncodeAuthenticator-content-ClientSecret",
+                    "type": "password",
+                    "className": "addon-field-wrapper"
+                },
+                {
+                    "index": 2,
+                    "displayOrder": 3,
+                    "ariaLabel": "Incode Authorization Endpoint URL",
+                    "inputType": "default",
+                    "name": "OAuth2AuthzEPUrl",
+                    "label": "Authorization Endpoint URL",
+                    "placeholder": "",
+                    "hint": "Incode authorization endpoint.",
+                    "required": true,
+                    "readOnly": false,
+                    "value": "",
+                    "maxLength": "",
+                    "minLength": "",
+                    "width": "16",
+                    "data-testid": "idp-edit-page-authenticator-settings-IncodeAuthenticator-content-OAuth2AuthzEPUrl"
+                },
+                {
+                    "index": 3,
+                    "displayOrder": 4,
+                    "ariaLabel": "Incode Token Endpoint URL",
+                    "inputType": "default",
+                    "name": "OAuth2TokenEPUrl",
+                    "label": "Token Endpoint URL",
+                    "placeholder": "",
+                    "hint": "Incode token endpoint.",
+                    "required": true,
+                    "readOnly": false,
+                    "value": "",
+                    "maxLength": "",
+                    "minLength": "",
+                    "width": "16",
+                    "data-testid": "idp-edit-page-authenticator-settings-IncodeAuthenticator-content-OAuth2TokenEPUrl"
+                },
+                {
+                    "index": 4,
+                    "displayOrder": 5,
+                    "ariaLabel": "Incode Scopes",
+                    "inputType": "default",
+                    "name": "Scopes",
+                    "label": "Scopes",
+                    "placeholder": "",
+                    "hint": "Scopes requested from Incode, separated by spaces.",
+                    "required": false,
+                    "readOnly": false,
+                    "value": "openid",
+                    "maxLength": "",
+                    "minLength": "",
+                    "width": "16",
+                    "data-testid": "idp-edit-page-authenticator-settings-IncodeAuthenticator-content-Scopes"
+                },
+                {
+                    "index": 5,
+                    "displayOrder": 6,
+                    "ariaLabel": "Incode Additional Query Parameters",
+                    "inputType": "default",
+                    "name": "commonAuthQueryParams",
+                    "label": "Additional Query Parameters",
+                    "placeholder": "",
+                    "hint": "Sent at login only. The connector adds prompt=login and login_hint with the identity linked to the user.",
+                    "required": false,
+                    "readOnly": false,
+                    "value": "",
+                    "maxLength": "",
+                    "minLength": "",
+                    "width": "16",
+                    "data-testid": "idp-edit-page-authenticator-settings-IncodeAuthenticator-content-commonAuthQueryParams"
+                },
+                {
+                    "index": 6,
+                    "displayOrder": 7,
+                    "ariaLabel": "Incode Authorized redirect URI",
+                    "inputType": "copyInput",
+                    "name": "callbackUrl",
+                    "label": "Authorized redirect URI",
+                    "placeholder": "",
+                    "hint": "Register this URL on the Incode face authentication client. Onboarding clients use https://<host>/accounts/register.",
+                    "required": false,
+                    "readOnly": true,
+                    "value": "",
+                    "maxLength": "",
+                    "minLength": "",
+                    "width": "16",
+                    "data-testid": "idp-edit-page-authenticator-settings-IncodeAuthenticator-content-callbackUrl"
+                }
+            ]
+        }
+    }
+}

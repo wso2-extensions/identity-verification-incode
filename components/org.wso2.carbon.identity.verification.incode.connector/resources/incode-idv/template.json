@@ -1,0 +1,165 @@
+{
+    "id": "incode-idv",
+    "name": "Incode Identity Verification",
+    "description": "Verify users with Incode identity verification at sign-up and face authentication at login.",
+    "docLink": "",
+    "image": "assets/images/logos/incode.svg",
+    "category": "DEFAULT",
+    "displayOrder": 19,
+    "services": [],
+    "tags": [
+        "Identity-Verification",
+        "OIDC"
+    ],
+    "type": "SOCIAL",
+    "templateId": "incode-idv",
+    "idp": {
+        "name": "Incode",
+        "description": "",
+        "image": "assets/images/logos/incode.svg",
+        "isPrimary": false,
+        "isFederationHub": false,
+        "homeRealmIdentifier": "",
+        "certificate": {
+            "certificates": []
+        },
+        "alias": "",
+        "idpIssuerName": "",
+        "claims": {
+            "userIdClaim": {
+                "uri": "identity_id"
+            },
+            "roleClaim": {
+                "uri": ""
+            },
+            "provisioningClaims": [],
+            "mappings": [
+                {
+                    "idpClaim": "identity_id",
+                    "localClaim": {
+                        "id": "aHR0cDovL3dzbzIub3JnL2NsYWltcy9pbmNvZGVJZGVudGl0eUlk",
+                        "uri": "http://wso2.org/claims/incodeIdentityId",
+                        "displayName": "Incode Identity ID"
+                    }
+                },
+                {
+                    "idpClaim": "interview_id",
+                    "localClaim": {
+                        "id": "aHR0cDovL3dzbzIub3JnL2NsYWltcy9pbmNvZGVJbnRlcnZpZXdJZA",
+                        "uri": "http://wso2.org/claims/incodeInterviewId",
+                        "displayName": "Incode Interview ID"
+                    }
+                },
+                {
+                    "idpClaim": "auth_overall_status",
+                    "localClaim": {
+                        "id": "aHR0cDovL3dzbzIub3JnL2NsYWltcy9pbmNvZGVPbmJvYXJkaW5nU3RhdHVz",
+                        "uri": "http://wso2.org/claims/incodeOnboardingStatus",
+                        "displayName": "Incode Onboarding Status"
+                    }
+                }
+            ]
+        },
+        "provisioning": {
+            "jit": {
+                "isEnabled": false,
+                "scheme": "PROVISION_SILENTLY",
+                "userstore": "PRIMARY",
+                "attributeSyncMethod": "NONE"
+            }
+        },
+        "federatedAuthenticators": {
+            "defaultAuthenticatorId": "SW5jb2RlQXV0aGVudGljYXRvcg",
+            "authenticators": [
+                {
+                    "authenticatorId": "SW5jb2RlQXV0aGVudGljYXRvcg",
+                    "isEnabled": true,
+                    "properties": [
+                        {
+                            "key": "ClientId",
+                            "displayName": "Client ID",
+                            "description": "Client ID of the Incode OIDC client.",
+                            "type": "STRING",
+                            "displayOrder": 1,
+                            "regex": ".*",
+                            "isMandatory": true,
+                            "isConfidential": false,
+                            "options": [],
+                            "defaultValue": "",
+                            "subProperties": []
+                        },
+                        {
+                            "key": "ClientSecret",
+                            "displayName": "Client secret",
+                            "description": "Client secret of the Incode OIDC client.",
+                            "type": "STRING",
+                            "displayOrder": 2,
+                            "regex": ".*",
+                            "isMandatory": true,
+                            "isConfidential": true,
+                            "options": [],
+                            "defaultValue": "",
+                            "subProperties": []
+                        },
+                        {
+                            "key": "OAuth2AuthzEPUrl",
+                            "displayName": "Authorization Endpoint URL",
+                            "description": "Incode authorization endpoint.",
+                            "type": "STRING",
+                            "displayOrder": 3,
+                            "regex": ".*",
+                            "isMandatory": true,
+                            "isConfidential": false,
+                            "options": [],
+                            "defaultValue": "",
+                            "subProperties": []
+                        },
+                        {
+                            "key": "OAuth2TokenEPUrl",
+                            "displayName": "Token Endpoint URL",
+                            "description": "Incode token endpoint.",
+                            "type": "STRING",
+                            "displayOrder": 4,
+                            "regex": ".*",
+                            "isMandatory": true,
+                            "isConfidential": false,
+                            "options": [],
+                            "defaultValue": "",
+                            "subProperties": []
+                        },
+                        {
+                            "key": "Scopes",
+                            "displayName": "Scopes",
+                            "description": "Scopes requested from Incode.",
+                            "type": "STRING",
+                            "displayOrder": 5,
+                            "regex": ".*",
+                            "isMandatory": false,
+                            "isConfidential": false,
+                            "options": [],
+                            "defaultValue": "openid",
+                            "subProperties": []
+                        },
+                        {
+                            "key": "commonAuthQueryParams",
+                            "displayName": "Additional Query Parameters",
+                            "description": "Sent at login only. The connector adds prompt=login and login_hint with the identity linked to the user.",
+                            "type": "STRING",
+                            "displayOrder": 6,
+                            "regex": ".*",
+                            "isMandatory": false,
+                            "isConfidential": false,
+                            "options": [],
+                            "defaultValue": "response_mode=form_post",
+                            "subProperties": []
+                        },
+                        {
+                            "key": "IsUserIdInClaims",
+                            "value": "true"
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

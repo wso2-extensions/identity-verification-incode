@@ -1,0 +1,13 @@
+{
+    "id": "incode-idv",
+    "name": "Incode Identity Verification",
+    "description": "Enable identity verification through Incode at sign-up and face authentication at login.",
+    "image": "assets/images/logos/incode.svg",
+    "category": "DEFAULT",
+    "displayOrder": 19,
+    "tags": [
+        "OIDC",
+        "Identity-Verification"
+    ],
+    "type": "identity-provider"
+}
