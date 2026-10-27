@@ -1,0 +1,15 @@
+{
+  "name": "Incode Identity Verification",
+  "owner": "WSO2",
+  "category": "Identity Verification",
+  "documentationUrl": "https://github.com/wso2-extensions/identity-verification-incode/blob/main/README.md",
+  "description": "The Incode connector adds identity verification to WSO2 Identity Server through Incode. It verifies users at self-registration and invited-user registration and links each account to its verified Incode identity, then re-verifies the account owner with Incode face authentication at login and password recovery.",
+  "status": "Active",
+  "labels": [
+    "Identity Verification",
+    "Incode"
+  ],
+  "releases": [
+
+  ]
+}
