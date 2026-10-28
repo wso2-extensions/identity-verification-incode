@@ -106,6 +106,10 @@ public class IncodeExecutor extends OpenIDConnectExecutor {
                 context.getUserInputData();
         String oauthError = inputs.get(OAUTH2_ERROR);
         if (StringUtils.isNotBlank(oauthError)) {
+            if (LOG.isDebugEnabled()) {
+                LOG.debug("Incode returned an error on the " + context.getFlowType() + " callback. error="
+                        + oauthError + ", error_description=" + inputs.get(Constants.ERROR_DESCRIPTION));
+            }
             return buildErrorResponse(Constants.ACCESS_DENIED.equals(oauthError) ?
                     ErrorMessage.VERIFICATION_CANCELLED : ErrorMessage.VERIFICATION_NOT_COMPLETED);
         }

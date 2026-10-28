@@ -40,10 +40,12 @@ public final class ErrorConstants {
                 "Your account is not linked to a verified identity. Please contact your administrator.",
                 "No Incode connection has linked an identity to the user.",
                 "incode.identity.verification.not.linked"),
+        // Incode returns access_denied both when the user cancels and when it does not verify the user.
         VERIFICATION_CANCELLED("60002",
-                "Identity verification was cancelled. Please try again.",
-                "Incode returned access_denied on the callback.",
-                "incode.identity.verification.cancelled"),
+                "Identity verification was cancelled or not completed. Please try again.",
+                "Incode returned access_denied on the callback: the user cancelled, or Incode did not verify the "
+                        + "user, for example because the face did not match.",
+                "incode.identity.verification.not.completed"),
         VERIFICATION_FAILED("60003",
                 "Your identity could not be verified.",
                 "Incode reported a status that is not accepted.",

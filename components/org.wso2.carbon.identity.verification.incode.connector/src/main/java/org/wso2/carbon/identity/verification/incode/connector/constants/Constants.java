@@ -42,6 +42,7 @@ public final class Constants {
             Collections.unmodifiableList(Arrays.asList("PASS", "OK"));
 
     public static final String ACCESS_DENIED = "access_denied";
+    public static final String ERROR_DESCRIPTION = "error_description";
     public static final String LOGIN_HINT = "login_hint";
     public static final String PROMPT = "prompt";
     public static final String PROMPT_LOGIN = "login";
@@ -58,8 +59,8 @@ public final class Constants {
      */
     public static final class ExecutorMetadata {
 
-        public static final String DISPLAY_NAME = "Incode";
-        public static final String DESCRIPTION = "Verify the user's identity with Incode.";
+        public static final String DISPLAY_NAME = "Incode Verification";
+        public static final String DESCRIPTION = "Verify user identity with Incode.";
         public static final String ICON = "assets/images/icons/incode.svg";
 
         private ExecutorMetadata() {

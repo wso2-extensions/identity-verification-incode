@@ -106,7 +106,8 @@ public class IncodeExecutorTest {
         assertEquals(executor.getSupportedFlowTypes(), EnumSet.of(FlowTypes.REGISTRATION,
                 FlowTypes.INVITED_USER_REGISTRATION, FlowTypes.PASSWORD_RECOVERY));
         FlowExecutorMetadata metadata = executor.getExecutorMetadata();
-        assertEquals(metadata.getDisplayName(), "Incode");
+        assertEquals(metadata.getDisplayName(), "Incode Verification");
+        assertEquals(metadata.getDescription(), "Verify user identity with Incode.");
         assertEquals(metadata.getAssociatedAuthenticator(), "IncodeAuthenticator");
         assertEquals(metadata.getIcon(), "assets/images/icons/incode.svg");
         assertTrue(metadata.isConnectionRequired());
@@ -116,11 +117,12 @@ public class IncodeExecutorTest {
     @Test
     public void testIncodeErrorEndsTheStepWithACode() {
 
-        ExecutorResponse cancelled = executor.execute(context(Collections.singletonMap("error", "access_denied")));
-        assertEquals(cancelled.getResult(), "USER_ERROR");
-        assertEquals(cancelled.getErrorCode(), "INCODE-60002");
-        assertEquals(cancelled.getErrorMessage(), "{{incode.identity.verification.cancelled.message}}");
-        assertEquals(cancelled.getErrorDescription(), "{{incode.identity.verification.cancelled.description}}");
+        // Incode returns access_denied both for a cancel and for a check that does not pass: general wording.
+        ExecutorResponse denied = executor.execute(context(Collections.singletonMap("error", "access_denied")));
+        assertEquals(denied.getResult(), "USER_ERROR");
+        assertEquals(denied.getErrorCode(), "INCODE-60002");
+        assertEquals(denied.getErrorMessage(), "{{incode.identity.verification.not.completed.message}}");
+        assertEquals(denied.getErrorDescription(), "{{incode.identity.verification.not.completed.description}}");
 
         ExecutorResponse failed = executor.execute(context(Collections.singletonMap("error", "server_error")));
         assertEquals(failed.getErrorCode(), "INCODE-60005");

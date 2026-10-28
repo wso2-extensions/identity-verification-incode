@@ -96,6 +96,10 @@ public class IncodeAuthenticator extends OpenIDConnectAuthenticator {
         context.removeProperty(Constants.EXPECTED_IDENTITY);
         String oauthError = request.getParameter(OAUTH2_ERROR);
         if (StringUtils.isNotBlank(oauthError)) {
+            if (LOG.isDebugEnabled()) {
+                LOG.debug("Incode returned an error on the login callback. error=" + oauthError
+                        + ", error_description=" + request.getParameter(Constants.ERROR_DESCRIPTION));
+            }
             throw handleAuthenticationFailedException(context, Constants.ACCESS_DENIED.equals(oauthError) ?
                     ErrorMessage.VERIFICATION_CANCELLED : ErrorMessage.VERIFICATION_NOT_COMPLETED);
         }

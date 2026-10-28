@@ -15,7 +15,7 @@ Server and adds only the Incode-specific checks.
 
 | Component | Name | Used in |
 |---|---|---|
-| Executor | `IncodeExecutor` (the **Incode** step in the flow builder) | Self-registration, invited-user registration and password recovery flows |
+| Executor | `IncodeExecutor` (the **Incode Verification** step in the flow builder) | Self-registration, invited-user registration and password recovery flows |
 | Authenticator | `IncodeAuthenticator` (also the `amr` value) | Application login flows |
 | Connection template | `incode-idv` (**Incode Identity Verification**) | Connections |
 
@@ -80,7 +80,7 @@ are read at startup):
 | `dropins/` (connector bundle) | `repository/components/dropins/` |
 | `connections/incode-idv/` (connection template) | `repository/resources/identity/extensions/connections/` |
 | `images/logos/incode.svg` (logo) | `console/resources/connections/assets/images/logos/`, `myaccount/resources/connections/assets/images/logos/` and `authenticationendpoint/libs/themes/default/assets/images/identity-providers/`, under `repository/deployment/server/webapps/` |
-| `images/icons/incode.svg` (square icon of the **Incode** step in the flow builder) | `console/resources/assets/images/icons/`, under `repository/deployment/server/webapps/` |
+| `images/icons/incode.svg` (square icon of the **Incode Verification** step in the flow builder) | `console/resources/assets/images/icons/`, under `repository/deployment/server/webapps/` |
 
 ---
 
@@ -114,16 +114,16 @@ authentication client. See Incode's developer documentation for creating OpenID 
    `interview_id` and `auth_overall_status` to the local attributes, sets `identity_id` as the subject attribute, and
    sets the connection property `IsUserIdInClaims` to `true` (the console does not show it). Keep Just-in-Time
    provisioning off.
-3. **Self-registration** (Console > Flows > Self Registration): add the **Incode** step with the onboarding
+3. **Self-registration** (Console > Flows > Self Registration): add the **Incode Verification** step with the onboarding
    connection. It can come before or after the form that asks for the username and password; a username chosen in
    the form is kept.
-4. **Invited-user registration** (Console > Flows): add the **Incode** step with the onboarding connection before the
+4. **Invited-user registration** (Console > Flows): add the **Incode Verification** step with the onboarding connection before the
    step that sets the password.
 5. **External claim resolution**: when a flow with the Incode step is saved, the step gets
    `isExternalClaimResolutionEnabled` set to `true` in its metadata, next to `idpName`. The connector declares it, so
    nothing needs to be configured. With it, the OpenID Connect sign-up step honors the connection's external claim
    mappings (the Incode attributes) and links the account to `identity_id`. Steps of other executors do not get it.
-6. **Password recovery** (Console > Flows): add the **Incode** step with the face authentication connection after the
+6. **Password recovery** (Console > Flows): add the **Incode Verification** step with the face authentication connection after the
    step that identifies the user.
 7. **Login** (the application's login flow): keep **Username & Password**, or another local first factor, as step 1
    and as the subject identifier step, and add the face authentication connection as a later step. No adaptive script
@@ -141,6 +141,11 @@ authentication client. See Incode's developer documentation for creating OpenID 
   apply to them.
 - Accounts are linked through the sub-organization's copy of the shared connection, and the duplicate check applies
   per organization.
+- Registration and password recovery in a sub-organization send the sub-organization's own page as the redirect URI,
+  for example `https://<host>/t/<root-organization>/o/<sub-organization-id>/accounts/register`. Register it on the
+  onboarding client, and the matching `/accounts/recovery` URL on the face authentication client, for each
+  sub-organization. Login needs no extra redirect URI: a shared connection keeps the root organization's
+  `/commonauth` callback.
 
 ---
 
@@ -154,7 +159,7 @@ authentication client. See Incode's developer documentation for creating OpenID 
 | Status `MANUAL`, `MANUAL_PENDING` or `WARN` | Refused, pending review (`INCODE-60004`) |
 | Any other status | Refused (`INCODE-60003`) |
 | `identity_id` already linked through an Incode connection of the organization | Refused before the account is created (`INCODE-60009`) |
-| User cancelled at Incode | Refused (`INCODE-60002`) |
+| User cancelled, or Incode did not verify the user (Incode returns `access_denied` for both) | Refused (`INCODE-60002`) |
 
 **Invited-user registration**: the same results as sign-up; on success the invited account is linked to
 `identity_id` and gets the Incode attributes.
@@ -166,7 +171,7 @@ authentication client. See Incode's developer documentation for creating OpenID 
 | Returned `identity_id` matches the link, status `PASS` or `OK` | Step succeeds; the password can be reset |
 | The account has no Incode link, or the username does not exist | Refused with the generic `INCODE-60005`, before Incode is called |
 | Another identity returned, or a failing or missing status | Refused (`INCODE-60008`, `60003`) |
-| User cancelled at Incode | Refused (`INCODE-60002`) |
+| User cancelled, or Incode did not verify the user (Incode returns `access_denied` for both) | Refused (`INCODE-60002`) |
 
 **Login**
 
@@ -175,7 +180,11 @@ authentication client. See Incode's developer documentation for creating OpenID 
 | Returned `identity_id` matches the link, status `PASS` or `OK` | Step succeeds |
 | No link, no local user from the subject step, or the subject step is not before the Incode step | WSO2 error page (`INCODE-60001`, `60010`, `65001`) |
 | The link could not be read | WSO2 error page (`INCODE-65010`) |
-| Cancelled, another identity returned, or a failing or missing status | The application receives `INCODE-60002`, `60008` or `60003` with a user-friendly description, or the application's adaptive script handles the failure in `onFail` |
+| Cancelled or not verified at Incode, another Incode error, another identity returned, or a failing or missing status | The application receives `INCODE-60002`, `60005`, `60008` or `60003` with a user-friendly description, or the application's adaptive script handles the failure in `onFail` |
+| The token request to Incode fails | The application receives the standard `login_required` error |
+
+The application receives these errors at its redirect URL as a standard OAuth 2.0 error response: the code in
+`error` and a message that can be shown to the user in `error_description`.
 
 ---
 
@@ -188,7 +197,7 @@ errors without a key show their English message.
 | Code | Meaning | i18n key |
 |---|---|---|
 | 60001 | The account is not linked to an Incode identity | `not.linked` |
-| 60002 | Verification cancelled | `cancelled` |
+| 60002 | Verification cancelled or not completed: Incode returned `access_denied` | `not.completed` |
 | 60003 | Verification failed | `failed` |
 | 60004 | Verification needs a manual review | `pending.review` |
 | 60005 | The verification could not be completed: Incode returned another error, or (password recovery) the account has no Incode link or does not exist | `not.completed` |

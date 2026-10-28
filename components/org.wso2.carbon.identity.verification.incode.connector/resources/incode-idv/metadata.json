@@ -2,7 +2,7 @@
     "create": {
         "image": "assets/images/logos/incode.svg",
         "header": "Incode Identity Verification",
-        "Subheading": "Enable identity verification through Incode at sign-up and face authentication at login.",
+        "Subheading": "Enable identity verification through Incode.",
         "documentation": "",
         "modal": {
             "form": {
@@ -85,30 +85,23 @@
                 "message": {
                     "copyInputFields": [
                         {
-                            "description": "Use the following URL as a <strong>Redirect URI</strong> of the Incode onboarding client.",
+                            "description": "Onboarding client (registration and invited-user registration):",
                             "value": "registration_redirect_uri"
                         },
                         {
-                            "description": "Use the following URL as a <strong>Redirect URI</strong> of the Incode face authentication client.",
+                            "description": "Face authentication client (login):",
                             "value": "redirect_uri"
                         },
                         {
-                            "description": "If the face authentication client is used for password recovery, also add the following <strong>Redirect URI</strong>.",
+                            "description": "Face authentication client (password recovery):",
                             "value": "recovery_redirect_uri"
                         }
                     ],
                     "header": "Prerequisites",
                     "paragraphs": [
-                        "Create one connection per Incode client: one for the <strong>onboarding</strong> client (used in self-registration and invited-user registration) and one for the <strong>face authentication</strong> client (used in login and password recovery).",
-                        "Register <Code class=\"inline-code\">https://&lt;host&gt;/accounts/register</Code> on the onboarding client, and <Code class=\"inline-code\">https://&lt;host&gt;/commonauth</Code> and <Code class=\"inline-code\">https://&lt;host&gt;/accounts/recovery</Code> on the face authentication client in the Incode Dashboard.",
-                        "The local attributes <Code class=\"inline-code\">incodeIdentityId</Code>, <Code class=\"inline-code\">incodeInterviewId</Code> and <Code class=\"inline-code\">incodeOnboardingStatus</Code> must exist: the connection maps the Incode claims to them. Also add the OpenID Connect attribute <Code class=\"inline-code\">identity_id</Code> mapped to <Code class=\"inline-code\">incodeIdentityId</Code>: the account is linked to it.",
-                        "In a self-registration flow, the Incode step can be placed before or after the form that asks for the username and password: a username chosen in the form is kept.",
-                        "In a login flow, add the Incode step after the step that identifies the user, such as <strong>Username &amp; Password</strong>, and keep that step as the subject identifier step. The connector sends the identity linked to the user as <Code class=\"inline-code\">login_hint</Code>. In a password recovery flow, add the Incode step with the face authentication connection after the step that identifies the user."
-                    ],
-                    "link": {
-                        "text": "See Incode's guide on OIDC clients.",
-                        "url": "https://developer.incode.com/concepts-and-architecture/oidc-manual-configuration/"
-                    }
+                        "In the Incode Dashboard, create an OIDC client for <strong>onboarding</strong> and another for <strong>face authentication</strong>, and create one connection for each. Add the redirect URIs below to the matching client.",
+                        "Before you create the connection, add the attributes <Code class=\"inline-code\">incodeIdentityId</Code> (OpenID Connect attribute <Code class=\"inline-code\">identity_id</Code>), <Code class=\"inline-code\">incodeInterviewId</Code> and <Code class=\"inline-code\">incodeOnboardingStatus</Code>."
+                    ]
                 },
                 "fields": [
                     {

@@ -201,6 +201,23 @@ public class IncodeAuthenticatorTest {
 
         assertCallbackError("access_denied", "INCODE-60002");
         assertCallbackError("server_error", "INCODE-60005");
+        assertCallbackError("expired_token", "INCODE-60005");
+    }
+
+    @Test
+    public void testIncodeDenialGivesTheApplicationAGeneralMessage() {
+
+        // Incode returns access_denied both for a cancel and for a face check that does not pass.
+        HttpServletRequest request = mock(HttpServletRequest.class);
+        when(request.getParameter("error")).thenReturn("access_denied");
+        AuthenticationContext context = context(localUser(), false);
+        try {
+            authenticator.processAuthenticationResponse(request, mock(HttpServletResponse.class), context);
+            fail("The step must fail when Incode denies the verification.");
+        } catch (AuthenticationFailedException e) {
+            assertEquals(context.getProperty(FrameworkConstants.AUTH_ERROR_MSG),
+                    "Identity verification was cancelled or not completed. Please try again.");
+        }
     }
 
     @Test
