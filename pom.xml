@@ -27,7 +27,7 @@
 
     <groupId>org.wso2.carbon.identity.verification</groupId>
     <artifactId>org.wso2.carbon.identity.verification.incode</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>1.0.1</version>
     <name>WSO2 Carbon - Incode Identity Verification Connector</name>
     <packaging>pom</packaging>
     <modules>
@@ -114,7 +114,7 @@
         <developerConnection>
             scm:git:https://github.com/wso2-extensions/identity-verification-incode.git
         </developerConnection>
-        <tag>HEAD</tag>
+        <tag>v1.0.1</tag>
     </scm>
 
     <build>
