@@ -60,7 +60,6 @@ public final class Constants {
     public static final class ExecutorMetadata {
 
         public static final String DISPLAY_NAME = "Incode Verification";
-        public static final String DESCRIPTION = "Verify user identity with Incode.";
         public static final String ICON = "assets/images/icons/incode.svg";
 
         private ExecutorMetadata() {

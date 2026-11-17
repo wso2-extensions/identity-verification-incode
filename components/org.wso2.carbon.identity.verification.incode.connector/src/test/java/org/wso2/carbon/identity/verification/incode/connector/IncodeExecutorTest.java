@@ -66,6 +66,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertNull;
 import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
 import static org.wso2.carbon.identity.application.authenticator.oidc.OIDCAuthenticatorConstants.CLIENT_ID;
@@ -107,7 +108,7 @@ public class IncodeExecutorTest {
                 FlowTypes.INVITED_USER_REGISTRATION, FlowTypes.PASSWORD_RECOVERY));
         FlowExecutorMetadata metadata = executor.getExecutorMetadata();
         assertEquals(metadata.getDisplayName(), "Incode Verification");
-        assertEquals(metadata.getDescription(), "Verify user identity with Incode.");
+        assertNull(metadata.getDescription());
         assertEquals(metadata.getAssociatedAuthenticator(), "IncodeAuthenticator");
         assertEquals(metadata.getIcon(), "assets/images/icons/incode.svg");
         assertTrue(metadata.isConnectionRequired());

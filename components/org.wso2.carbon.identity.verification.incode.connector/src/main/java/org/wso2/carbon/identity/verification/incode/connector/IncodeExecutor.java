@@ -86,7 +86,6 @@ public class IncodeExecutor extends OpenIDConnectExecutor {
 
         return FlowExecutorMetadata.builder()
                 .displayName(Constants.ExecutorMetadata.DISPLAY_NAME)
-                .description(Constants.ExecutorMetadata.DESCRIPTION)
                 .icon(Constants.ExecutorMetadata.ICON)
                 .associatedAuthenticator(Constants.AUTHENTICATOR_NAME)
                 .connectionRequired(true)

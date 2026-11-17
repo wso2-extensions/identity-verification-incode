@@ -85,21 +85,13 @@
                 "message": {
                     "copyInputFields": [
                         {
-                            "description": "Onboarding client (registration and invited-user registration):",
-                            "value": "registration_redirect_uri"
-                        },
-                        {
                             "description": "Face authentication client (login):",
                             "value": "redirect_uri"
-                        },
-                        {
-                            "description": "Face authentication client (password recovery):",
-                            "value": "recovery_redirect_uri"
                         }
                     ],
                     "header": "Prerequisites",
                     "paragraphs": [
-                        "In the Incode Dashboard, create an OIDC client for <strong>onboarding</strong> and another for <strong>face authentication</strong>, and create one connection for each. Add the redirect URIs below to the matching client.",
+                        "In the Incode Dashboard, create an OIDC client for <strong>onboarding</strong> and another for <strong>face authentication</strong>, and create one connection for each. Add the redirect URI below to the face authentication client.",
                         "Before you create the connection, add the attributes <Code class=\"inline-code\">incodeIdentityId</Code> (OpenID Connect attribute <Code class=\"inline-code\">identity_id</Code>), <Code class=\"inline-code\">incodeInterviewId</Code> and <Code class=\"inline-code\">incodeOnboardingStatus</Code>."
                     ]
                 },
@@ -170,7 +162,7 @@
                 "steps": [
                     {
                         "title": "Onboarding client: add to the registration flow",
-                        "content": "<p>In the self-registration flow, add the <strong>Incode</strong> step before or after the form that collects the username, and select a connection that holds an onboarding client. The step accepts only a passing Incode result, refuses an identity that is already registered, keeps the username chosen in the form and links the user to their Incode identity. Register <Code class=\"inline-code\">https://&lt;server&gt;/accounts/register</Code> on the client.</p>"
+                        "content": "<p>In the self-registration flow, add the <strong>Incode</strong> step before or after the form that collects the username, and select a connection that holds an onboarding client. The step accepts only a passing Incode result, refuses an identity that is already registered, keeps the username chosen in the form and links the user to their Incode identity.</p>"
                     },
                     {
                         "title": "Face authentication client: add to login",
@@ -332,7 +324,7 @@
                     "name": "callbackUrl",
                     "label": "Authorized redirect URI",
                     "placeholder": "",
-                    "hint": "Register this URL on the Incode face authentication client. Onboarding clients use https://<host>/accounts/register.",
+                    "hint": "Register this URL on the Incode face authentication client.",
                     "required": false,
                     "readOnly": true,
                     "value": "",
